@@ -16,7 +16,28 @@ public class DaoCarImp implements DaoCarro{
 
     @Override
     public void saveCar(Car car) {
+        conexao = new Conexao().getConection();
         
+        try{
+            this.pstm = conexao.prepareStatement("INSERT INTO db_car(marca_carro, modelo_carro, ano_carro) VALUES (?, ?, ?)");
+            this.pstm.setString(1, car.getMarca());
+            this.pstm.setString(2, car.getModelo());                //precisa estar em ordem;
+            this.pstm.setInt(3, car.getAno());
+            this.pstm.execute();
+            
+            JOptionPane.showMessageDialog(null, "Carro inserido com sucesso");
+        }
+        catch(SQLException error){
+            JOptionPane.showMessageDialog(null, "Erro ao inserir dados do Banco de Dados: " + error);
+        }
+        finally{
+            try{
+                conexao.close();
+            }
+            catch(SQLException errorC){
+                JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + errorC);
+            }
+        }
     }
 
     @Override
