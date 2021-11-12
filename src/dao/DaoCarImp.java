@@ -42,12 +42,62 @@ public class DaoCarImp implements DaoCarro{
 
     @Override
     public void updateCar(Car car) {
+        String update = "UPDATE db_car SET marca_carro=? , modelo_carro=? , ano_carro=? WHERE id_carro=?";
+        
+        conexao = new Conexao().getConection();
+          
+        try{
+            //prepara o caminho para o banco de dados;
+            this.pstm = conexao.prepareStatement(update);
+            
+            this.pstm.setString(1, car.getMarca());
+            this.pstm.setString(2, car.getModelo());
+            this.pstm.setInt(3, car.getAno());
+            this.pstm.setInt(4, car.getId());
+            
+            this.pstm.execute();
+            JOptionPane.showMessageDialog(null, "Car has been update successful");
+            
+            this.pstm.close();
+            //fecha o caminho para o banco de dados;
+            
+        }catch(SQLException erroUpdate){
+            JOptionPane.showMessageDialog(null, "Error on update DataBase: " + erroUpdate);
+        }finally{
+            try
+            {
+               conexao.close();
+            }
+            catch(SQLException errorClose)
+            {
+                JOptionPane.showMessageDialog(null, "Error on try to update and close the DataBase:" + errorClose);
+            }
+        }
         
     }
 
     @Override
     public void deleteCar(int id) {
+       String delete = "DELETE FROM db_car WHERE id_carro =?";
+       conexao = new Conexao().getConection();
        
+       try{
+           this.pstm = conexao.prepareStatement(delete);
+           this.pstm.setInt(1, id);  //aqui receberá o id recebido como parametro;
+           this.pstm.execute();
+           this.pstm.close();
+       }
+       catch(SQLException errorDel){
+           JOptionPane.showMessageDialog(null, "Error while try to delete car: " + errorDel);
+       }
+       finally{
+           try{
+               conexao.close();
+           }
+           catch(SQLException errorClose){
+               JOptionPane.showMessageDialog(null, "Error on close connection to delete car from DataBase:" + delete);
+           }
+       }
     }
 
     @Override
