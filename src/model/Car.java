@@ -5,8 +5,19 @@ public class Car {
     private String modelo;
     private String marca;
     private int ano;
+    private int qtd;
+    private double valor;
     
     public Car(){
+    }
+    
+    public Car(int id, String modelo, String marca, int ano, int qtd, double valor){
+        this.id = id;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.ano = ano;
+        this.qtd = qtd;
+        this.valor = valor;
     }
 
     public int getId() {
@@ -39,6 +50,22 @@ public class Car {
 
     public void setAno(int ano) {
         this.ano = ano;
+    }
+    
+    public int getQtd(){
+        return qtd;
+    }
+    
+    public void setQtd(int qtd){
+        this.qtd = qtd;
+    }
+    
+    public double getValor(){
+        return valor;
+    }
+    
+    public void setValor(double valor){
+        this.valor = valor;
     }
 
     @Override

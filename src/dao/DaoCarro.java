@@ -7,4 +7,6 @@ public interface DaoCarro {
     public void updateCar(Car car);
     public void deleteCar(int id);
     public List<Car> getCars();
+    public int getQtdCar(String modelBuy);
+    public void updateQtdCar(int qtd, int id);
 }
