@@ -158,7 +158,7 @@ public class DaoCarImp implements DaoCarro{
         //rs.first(); rs.next(); rs.previous(); rs.last();
         int qtd = 0;
         
-        String sql = "SELECT qtd_carro FROM db_car WHERE model0_carro = ?";
+        String sql = "SELECT qtd_carro FROM db_car WHERE modelo_carro = ?";
         
         try{
             pstm = conexao.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -192,8 +192,8 @@ public class DaoCarImp implements DaoCarro{
             //prepara o caminho para o banco de dados;
             this.pstm = conexao.prepareStatement(update);
             
-            this.pstm.setInt(4, qtd);          
-            this.pstm.setInt(6, id);
+            this.pstm.setInt(1, qtd);          
+            this.pstm.setInt(2, id);
             
             this.pstm.execute();
             JOptionPane.showMessageDialog(null, "Car has been update successful");

@@ -70,7 +70,8 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" + "id=" + id + ", modelo=" + modelo + ", marca=" + marca + ", ano=" + ano + '}';
+        return "Car{\n" + "id=" + id + ", modelo=" + modelo + "\nmarca=" + marca + ", ano=" + ano + 
+                "\n quant=" + qtd + ", R$" + valor + '}';
     }
     
     
