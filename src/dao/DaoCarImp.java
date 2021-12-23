@@ -20,7 +20,7 @@ public class DaoCarImp implements DaoCarro{
         
         try{
             this.pstm = conexao.prepareStatement("INSERT INTO db_car(marca_carro, modelo_carro, ano_carro, qtd_carro, valor_carro) VALUES (?, ?, ?, ?, ?)");
-            this.pstm.setString(1, car.getMarca());
+            this.pstm.setInt(1, car.getMarca());
             this.pstm.setString(2, car.getModelo());                //precisa estar em ordem;
             this.pstm.setInt(3, car.getAno());
             this.pstm.setInt(4, 0);//sempre que for setar o valor é possível inicia-lo com o valor 0;
@@ -52,7 +52,7 @@ public class DaoCarImp implements DaoCarro{
             //prepara o caminho para o banco de dados;
             this.pstm = conexao.prepareStatement(update);
             
-            this.pstm.setString(1, car.getMarca());
+            this.pstm.setInt(1, car.getMarca());
             this.pstm.setString(2, car.getModelo());
             this.pstm.setInt(3, car.getAno());
             this.pstm.setInt(4, car.getQtd());
@@ -123,7 +123,7 @@ public class DaoCarImp implements DaoCarro{
             do{
                 Car c = new Car();
                 c.setId(rs.getInt("id_carro"));
-                c.setMarca(rs.getString("marca_carro"));
+                c.setMarca(rs.getInt("marca_carro"));
                 c.setModelo(rs.getString("modelo_carro"));
                 c.setAno(rs.getInt("ano_carro"));
                 c.setQtd(rs.getInt("qtd_carro"));

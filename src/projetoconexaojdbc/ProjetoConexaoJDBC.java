@@ -4,14 +4,18 @@ import conexao.Conexao;
 import java.util.ArrayList;
 import java.util.List;
 import dao.DaoCarImp;
+import dao.DaoMarcaImp;
 import javax.swing.JOptionPane;
 import model.Car;
+import model.Marca;
+
 
 public class ProjetoConexaoJDBC {
 
    
     public static void main(String[] args) {
         DaoCarImp dao = new DaoCarImp();
+        DaoMarcaImp daoMarc = new DaoMarcaImp();
         
         int op;
         int pos = -1;
@@ -25,13 +29,31 @@ public class ProjetoConexaoJDBC {
             switch(op)
             {
                 case 1: //cadastrar carro
+                    int key = 0;
                     Car car = new Car();
-                    car.setMarca(JOptionPane.showInputDialog("Digite a marca do carro:"));
-                    car.setModelo(JOptionPane.showInputDialog("Digite o modelo do carro:"));
-                    car.setAno(Integer.parseInt(JOptionPane.showInputDialog("Digite o ano do carro:")));
+                    //car.setMarca(JOptionPane.showInputDialog("Digite a marca do carro:"));
+                    List<Marca> marcas = daoMarc.getMarcas();
                     
-                    dao.saveCar(car);
+                    String myMarc = JOptionPane.showInputDialog("Digite a marcado carro a ser cadstrado");
+                    
+                    for(int i = 0; i < marcas.size(); i++){
+                     if(myMarc.equals(marcas.get(i).getDescricao()))   {
+                         key = marcas.get(i).getId();
+                     }
+                    }
+                    if(key != 0){
+                        car.setMarca(key);
+                        car.setModelo(JOptionPane.showInputDialog("Digite o modelo do carro:"));
+                        car.setAno(Integer.parseInt(JOptionPane.showInputDialog("Digite o ano do carro:")));
+                        car.setValor(Double.parseDouble(JOptionPane.showInputDialog("Digite o valor do carro: ")));
+                        
+                        dao.saveCar(car);
+                        key = 0;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Marca não cadastrada, favor cadastrar esta marca antes de utiliza-la");
+                    }                            
                     break;
+                    
                 case 2: //alterar carro
                     String modelo = JOptionPane.showInputDialog("Digite o modelo do carro a ser alterado: ");
                     
@@ -47,17 +69,33 @@ public class ProjetoConexaoJDBC {
                     }
                     
                     if(pos != -1){
-                        Car carAlt = new Car();
-                        carAlt.setMarca(JOptionPane.showInputDialog("Digite a marca do carro:"));
-                        carAlt.setModelo(JOptionPane.showInputDialog("Digite o modelo do carro:"));
-                        carAlt.setAno(Integer.parseInt(JOptionPane.showInputDialog("Digite o ano do carro:")));
-                        //define o id do carro que terá os dados alterados:
-                        carAlt.setId(listToChange.get(pos).getId());
                         
-                        dao.updateCar(carAlt);
-                        pos = -1;
+                        int keyUpdate = 0;
+                        Car carAlt = new Car();
+                        
+                        List<Marca> marcasUpdate = daoMarc.getMarcas();
+                    
+                        String myMarcUp = JOptionPane.showInputDialog("Digite a marcado carro a ser cadstrado");
+                    
+                        for(int i = 0; i < marcasUpdate.size(); i++){
+                            if(myMarcUp.equals(marcasUpdate.get(i).getDescricao()))   {
+                                key = marcasUpdate.get(i).getId();
+                            }
+                        }
+                        if(keyUpdate != 0){
+                        
+                            carAlt.setMarca(keyUpdate);
+                            carAlt.setModelo(JOptionPane.showInputDialog("Digite o modelo do carro:"));
+                            carAlt.setAno(Integer.parseInt(JOptionPane.showInputDialog("Digite o ano do carro:")));
+                            //define o id do carro que terá os dados alterados:
+                            carAlt.setId(listToChange.get(pos).getId());
+
+                            dao.updateCar(carAlt);
+                            pos = -1;
+                        }
                     }
                     break;
+                    
                 case 3: //deletar carro
                     String modelDel = JOptionPane.showInputDialog("Digite o modelo do carro a ser alterado: ");
                     
@@ -87,6 +125,7 @@ public class ProjetoConexaoJDBC {
                         pos = -1;
                     }
                     break;
+                    
                 case 4: //listar carros
                     List<Car> list = new ArrayList<Car>();  
                     list.clear();
@@ -96,6 +135,7 @@ public class ProjetoConexaoJDBC {
                         JOptionPane.showMessageDialog(null, list.get(i).toString());
                     }
                     break;
+                    
                 case 5: //comprar carro
                     String modelBuy = JOptionPane.showInputDialog("Digite o modelo do carro a ser comprado: ");
                     

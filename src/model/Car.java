@@ -3,7 +3,7 @@ package model;
 public class Car {
     private int id;
     private String modelo;
-    private String marca;
+    private int marca;
     private int ano;
     private int qtd;
     private double valor;
@@ -11,7 +11,7 @@ public class Car {
     public Car(){
     }
     
-    public Car(int id, String modelo, String marca, int ano, int qtd, double valor){
+    public Car(int id, String modelo, int marca, int ano, int qtd, double valor){
         this.id = id;
         this.modelo = modelo;
         this.marca = marca;
@@ -36,11 +36,11 @@ public class Car {
         this.modelo = modelo;
     }
 
-    public String getMarca() {
+    public int getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(int marca) {
         this.marca = marca;
     }
 
